@@ -401,7 +401,19 @@ function HomePage({ onNavigate }) {
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',
       })
-      const data = await response.json()
+      const contentType = response.headers.get('content-type') ?? ''
+      let data = null
+
+      if (contentType.includes('application/json')) {
+        data = await response.json()
+      } else {
+        const rawText = await response.text()
+        throw new Error(
+          rawText.includes('<!doctype') || rawText.includes('<html')
+            ? 'Ask Eason AI backend is not available in this environment. Start the API server or deploy an API route.'
+            : 'Ask Eason AI returned an unexpected response format.',
+        )
+      }
 
       if (!response.ok) {
         throw new Error(data.error ?? 'Ask Eason AI is unavailable.')
