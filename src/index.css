@@ -1,17 +1,19 @@
 :root {
-  --accent: #1f5b74;
-  --bg: #eef3f4;
-  --border: #d7e0e2;
-  --ink: #172227;
-  --muted: #607076;
-  --muted-soft: #7d8b90;
-  --surface: #fbfcfc;
-  --surface-strong: #edf3f4;
-  --text: #16242a;
-  --shadow: 0 18px 48px rgba(23, 34, 39, 0.1);
+  --accent: #f4c52a;
+  --accent-strong: #ffde57;
+  --bg: #06080b;
+  --border: #3a404b;
+  --ink: #030405;
+  --muted: #aab3c3;
+  --muted-soft: #7d8697;
+  --surface: #0f1218;
+  --surface-strong: #161b24;
+  --text: #f3f5f8;
+  --shadow: 0 20px 54px rgba(0, 0, 0, 0.42);
+  --warning: #f4c52a;
   --sans:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+    "Bahnschrift", "Rajdhani", "Segoe UI", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, sans-serif;
 
   color: var(--text);
   font-family: var(--sans);
@@ -29,7 +31,9 @@
 }
 
 html {
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(244, 197, 42, 0.16), transparent 32%),
+    linear-gradient(180deg, #0b0e14, #06080b);
   scroll-behavior: smooth;
 }
 
@@ -46,14 +50,16 @@ select {
 }
 
 #root {
-  background: var(--surface);
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(17, 20, 27, 0.92), rgba(10, 12, 18, 0.95)),
+    var(--surface);
+  border-left: 1px solid rgba(244, 197, 42, 0.2);
+  border-right: 1px solid rgba(244, 197, 42, 0.2);
   margin: 0 auto;
-  max-width: 1180px;
+  max-width: 1640px;
   min-height: 100vh;
 }
 
 ::selection {
-  background: rgba(31, 91, 116, 0.16);
+  background: rgba(245, 197, 66, 0.3);
 }

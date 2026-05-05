@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
-import heroLayer from './assets/hero.png'
 
 const contacts = [
   { label: 'Email', value: 'e2hua@uwaterloo.ca', href: 'mailto:e2hua@uwaterloo.ca' },
@@ -15,24 +14,168 @@ const contacts = [
 
 const routes = [
   { path: '/', label: 'Home' },
-  { path: '/experience', label: 'Experience' },
+  { path: '/activities', label: 'About' },
+  { path: '/experience', label: 'Resume' },
   { path: '/projects', label: 'Projects' },
-  { path: '/activities', label: 'Activities' },
+  { path: '/photos', label: 'Photos' },
   { path: '/contact', label: 'Contact' },
 ]
 
-const skills = [
-  ['Programming', ['Python', 'C++', 'C/C#', 'SQL']],
-  ['Web Development', ['React', 'JavaScript', 'HTML', 'CSS', 'Flask']],
-  ['Systems & Tools', ['Supabase', 'n8n', 'Codex', 'Arduino']],
-  ['Creative Tools', ['Blender', 'Adobe Premiere Pro', '3D printing']],
+const photoFiles = [
+  '00a861f2aa307e5c26014a210f265489.jpg',
+  '08c71892eba4aba48e44d1b7bbff2658.jpg',
+  '100c634cdbf7de11bed031117b37e74f.jpg',
+  '1115dd33d007a46d6096fd8b95f2c9db.jpg',
+  '11b850ed761c3f92cb24646554bac4bc.jpg',
+  '11cd1962792df5f05703523778c2628f.jpg',
+  '14902adb886ee1dee0ef7b553d6906cc.jpg',
+  '18df32e53cdf95fbf7ad879f53ff6be0.jpg',
+  '1c2366611a0a845891eee0183681c2a7.jpg',
+  '20a8a3ff44e57f601f24fd4d5b5b278f.jpg',
+  '2acdbd71314a5a71520ce8e94c8450f7.jpg',
+  '3caf46a9880e96b3acd5229aeb27a69b.jpg',
+  '46cc979b950ec7082a93c92d6a0ce6bd.jpg',
+  '47971ebea8aeb542572b831365d73c2a.jpg',
+  '4b403cc1a5bc451f94acef37e9098c67.jpg',
+  '4b9c74c71f6c9f28e0aa4e05945afb3e.jpg',
+  '50fa11f878a59660fcbc895d639367d6.jpg',
+  '61b5dd8a7c90b646383c554761e2cfd9.jpg',
+  '63b30c45d92575badd9566c32a95a84f.jpg',
+  '64494e3c7cc5e6dd9afef37d99e01f88.jpg',
+  '677c69d47c7e0ad2839cac699f49b831.jpg',
+  '6bfd906ffacc8985e7025a6c2dc55354.jpg',
+  '70116833725fe2d95480a660c9a4f749.jpg',
+  '736575805042b2502408f1c540ebf79d.jpg',
+  '7eaedf6e622b5615feeeff716e49f838.jpg',
+  '843be885f2e44b75c19933fa77c24953.jpg',
+  '847b8166d4c1b0e0680aa56b235c5ab9.jpg',
+  '8508f422dad2eb669742f50bea59b091.jpg',
+  '899d070be86255f1f75dd27c996a335e.jpg',
+  '956aee4f3eac8b5e770b72e0ed218f68.jpg',
+  '9599e2e20d376b3ec183b2b4348ab240.jpg',
+  '96f097225ff7fc8cfee271556db3bd54.jpg',
+  '9936ea21b95a82f083ff7faf633f7e72.jpg',
+  'a36c114de50f7730bbe6e1423f02a171.jpg',
+  'a55d974665cd68a3fbdd976c3a04ccc4.jpg',
+  'a8251b463f0a64c415820d66f6fb981b.jpg',
+  'b08d8f683937484024be43ca48a21e71.jpg',
+  'b1be9b16ad517e18b25a90078b6eb87d.jpg',
+  'b7b4b8f6bb9938d71a713c539cf0b448.jpg',
+  'bf59e1505e06f9de4f6fdcb9de8e5eba.jpg',
+  'c15cc57debbe58a9a3a7b2b8c491c008.jpg',
+  'c4937ccd745c843640577b9c161413a6.jpg',
+  'c49eebf7909b19ea1267c7c94787ca73.jpg',
+  'c5cd458f47c1b414124249a0f5af7d5a.jpg',
+  'c6cedb703b1bf595da02bc7632689fb6.jpg',
+  'ca054a5cf6f7232b5f820f589d9a49ae.jpg',
+  'cc286ca0d593579cff483def38435e07.jpg',
+  'd41033cc9c7ef59b88d43c9dd0a516ca.jpg',
+  'da821a40a51ae887650b4075f301307d.jpg',
+  'f63a29727690df251ea061a955ff73d9.jpg',
+  'f6e9e4d4aa10bee4c9c3a441aaa525e8.jpg',
+  'f7d188090a39a6af98db4d2f206774a9.jpg',
+  'fa629d875476b328c597b4983cc875f5.jpg',
 ]
 
-const highlights = [
-  'Bachelor of Mathematics student at the University of Waterloo',
-  'Full-stack internal tools, automation workflows, and data processing',
-  'Experience with React, Flask, Supabase, Python, and n8n',
+const photoPaths = photoFiles.map((fileName) => `/my%20photos/${fileName}`)
+
+const pianoVideos = [
+  {
+    description: "A piano practice clip of Joe Hisaishi's Castle in the Sky.",
+    src: '/piano/ed4100e1d05fba9a8c699ab3f809a0c1.mp4',
+    title: 'Castle in the Sky - Joe Hisaishi',
+  },
+  {
+    description: 'A piano practice clip of Just Want to Say.',
+    src: '/piano/eb9da8645c6ebdb93794db63bacd1833.mp4',
+    title: 'Just Want to Say',
+  },
+  {
+    description: "A piano practice clip of Tony Ann's Rain.",
+    src: '/piano/6c5f11edc5363b5439085f7d480bceef.mp4',
+    title: 'Rain - Tony Ann',
+  },
 ]
+
+const resumeSkills = [
+  {
+    group: 'Languages',
+    items: [
+      'Python',
+      'JavaScript',
+      'HTML',
+      'CSS',
+      'SQL',
+      'C',
+      'C++',
+      'C#',
+      'Racket',
+      'VBA',
+      'LabVIEW SDK',
+    ],
+  },
+  {
+    group: 'Web, Backend & Data',
+    items: [
+      'React',
+      'Vite',
+      'Flask',
+      'Supabase',
+      'WordPress',
+    ],
+  },
+  {
+    group: 'Tools, Platforms & Creative',
+    items: [
+      'n8n',
+      'Figma',
+      'Git',
+      'Blender',
+      'Spine',
+      'Adobe Premiere Pro',
+      'Adobe Animate',
+      'Photoshop',
+    ],
+  },
+]
+
+const skillLogoMap = {
+  Blender: '/skill-logos/blender.svg',
+  C: '/skill-logos/c.svg',
+  'C#': '/skill-logos/csharp.svg',
+  'C++': '/skill-logos/cplusplus.svg',
+  CSS: '/skill-logos/css.svg',
+  Figma: '/skill-logos/figma.svg',
+  Flask: '/skill-logos/flask.svg',
+  Git: '/skill-logos/git.svg',
+  HTML: '/skill-logos/html.svg',
+  JavaScript: '/skill-logos/javascript.svg',
+  'LabVIEW SDK': '/skill-logos/labview.svg',
+  n8n: '/skill-logos/n8n.svg',
+  Python: '/skill-logos/python.svg',
+  Racket: '/skill-logos/racket.svg',
+  React: '/skill-logos/react.svg',
+  SQL: '/skill-logos/sqldeveloper.svg',
+  Supabase: '/skill-logos/supabase.svg',
+  Spine: '/logo/spine_logo_dark.png',
+  VBA: '/skill-logos/visualbasic.svg',
+  Vite: '/skill-logos/vite.svg',
+  WordPress: '/skill-logos/wordpress.svg',
+  Photoshop: '/skill-logos/photoshop-devicon.svg',
+  'Adobe Animate': '/skill-logos/adobe-animate.svg',
+  'Adobe Premiere Pro': '/skill-logos/premierepro.svg',
+}
+
+function SkillBadge({ skill }) {
+  const logo = skillLogoMap[skill]
+
+  return (
+    <span className={logo ? 'skill-badge has-logo' : 'skill-badge'}>
+      {logo && <img alt="" src={logo} />}
+      {skill}
+    </span>
+  )
+}
 
 const experience = [
   {
@@ -104,6 +247,14 @@ const experience = [
 
 const projects = [
   {
+    title: 'Helldivers 2 Readiness Platform',
+    date: 'Aug 2025 - Present',
+    tools: 'React, JavaScript, CSS, community workflows',
+    text:
+      'Built and maintained https://www.wearehelldivers.xyz/, a Helldivers 2 project focused on operational readiness content. I was responsible for training-oriented preparedness modules, a small forum for player collaboration, and wiki-style knowledge organization for missions, loadouts, and team coordination.',
+    url: 'https://www.wearehelldivers.xyz/',
+  },
+  {
     title: '3D Animation - Atomic Hybridization',
     date: 'Sep 2023 - Jan 2024',
     tools: 'Blender, Adobe Premiere Pro',
@@ -161,11 +312,6 @@ const activities = [
   },
 ]
 
-const awards = [
-  '2022 Australian Kangaroo Mathematics Competition Gold Award',
-  '2022-2023 National Academic Quiz Tournaments team competition: Year-8th',
-]
-
 function useRoute() {
   const [path, setPath] = useState(window.location.pathname)
 
@@ -188,19 +334,27 @@ function useRoute() {
 function Nav({ currentPath, onNavigate }) {
   return (
     <nav className="nav" aria-label="Primary navigation">
-      {routes.map((route) => (
-        <a
-          aria-current={currentPath === route.path ? 'page' : undefined}
-          href={route.path}
-          key={route.path}
-          onClick={(event) => {
-            event.preventDefault()
-            onNavigate(route.path)
-          }}
-        >
-          {route.label}
-        </a>
-      ))}
+      <a className="brand-link" href="/" onClick={(event) => {
+        event.preventDefault()
+        onNavigate('/')
+      }}>
+        Eason Hua
+      </a>
+      <div className="nav-links">
+        {routes.map((route) => (
+          <a
+            aria-current={currentPath === route.path ? 'page' : undefined}
+            href={route.path}
+            key={route.path}
+            onClick={(event) => {
+              event.preventDefault()
+              onNavigate(route.path)
+            }}
+          >
+            {route.label}
+          </a>
+        ))}
+      </div>
     </nav>
   )
 }
@@ -215,98 +369,172 @@ function PageHeader({ eyebrow, title, intro }) {
   )
 }
 
-function Section({ marker, title, children }) {
-  return (
-    <section className="section">
-      <div className="section-title">
-        <span>{marker}</span>
-        <h2>{title}</h2>
-      </div>
-      {children}
-    </section>
-  )
-}
-
 function HomePage({ onNavigate }) {
+  const [chatInput, setChatInput] = useState('')
+  const [chatMessages, setChatMessages] = useState([
+    {
+      role: 'assistant',
+      content:
+        "Ask me about Eason's work experience, technical projects, Waterloo coursework, or full-stack skills.",
+    },
+  ])
+  const [isSending, setIsSending] = useState(false)
+  const [chatError, setChatError] = useState('')
+
+  const sendChatMessage = async (event) => {
+    event.preventDefault()
+
+    const message = chatInput.trim()
+    if (!message || isSending) return
+
+    setChatInput('')
+    setChatError('')
+    setIsSending(true)
+    setChatMessages((currentMessages) => [
+      ...currentMessages,
+      { role: 'user', content: message },
+    ])
+
+    try {
+      const response = await fetch('/api/chat', {
+        body: JSON.stringify({ message }),
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+      })
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error ?? 'Ask Eason AI is unavailable.')
+      }
+
+      setChatMessages((currentMessages) => [
+        ...currentMessages,
+        { role: 'assistant', content: data.reply },
+      ])
+    } catch (error) {
+      setChatError(error instanceof Error ? error.message : 'Ask Eason AI is unavailable.')
+    } finally {
+      setIsSending(false)
+    }
+  }
+
   return (
-    <>
-      <header className="hero">
-        <div className="hero-layout">
-          <div className="hero-copy">
-            <p className="eyebrow">University of Waterloo / Mathematics</p>
-            <h1>Eason Hua</h1>
-            <p className="intro">
-              Computational mathematics student focused on practical full-stack
-              systems, automation workflows, and technical communication.
-            </p>
-            <div className="hero-actions">
-              <a className="button primary" href="mailto:e2hua@uwaterloo.ca">
-                Email me
-              </a>
-              <button className="button secondary" onClick={() => onNavigate('/experience')}>
-                View resume
-              </button>
-            </div>
+    <div className="home-dashboard">
+      <section className="home-intro-card">
+        <div className="corner-frame" aria-hidden="true"></div>
+        <div className="avatar-mark" aria-label="Eason Hua profile photo"></div>
+        <div className="intro-links" aria-label="Profile links">
+          <a href="https://www.linkedin.com/in/eason-hua" target="_blank" rel="noreferrer">
+            in
+          </a>
+          <a href="https://github.com/yichunhua37-glitch" target="_blank" rel="noreferrer">
+            gh
+          </a>
+          <a href="mailto:e2hua@uwaterloo.ca">@</a>
+        </div>
+        <p className="home-kicker">Bachelor of Mathematics / University of Waterloo</p>
+        <h1>Hey, I am Eason Hua.</h1>
+        <p>
+          I am a Waterloo mathematics student building full-stack systems,
+          automation workflows, and data-driven internal tools. My experience
+          includes NI hardware configuration systems at Emerson, CRM and project
+          management automation, and React plus WordPress web development.
+        </p>
+      </section>
+
+      <aside className="home-resume-card">
+        <div className="resume-preview" aria-hidden="true">
+          <div className="resume-preview-header"></div>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div>
+          <p className="home-kicker">Current Resume</p>
+          <h2>Resume PDF and web profile</h2>
+          <p className="resume-card-copy">
+            View my current resume, download the PDF, or browse the expanded
+            website version with more project and experience details.
+          </p>
+          <div className="resume-actions">
+            <a className="button primary" href="/resume/Resume_2B.pdf" target="_blank" rel="noreferrer">
+              View PDF
+            </a>
+            <a className="button ghost" download href="/resume/Resume_2B.pdf">
+              Download
+            </a>
+            <button className="button text-button" onClick={() => onNavigate('/experience')}>
+              Web resume
+            </button>
           </div>
+        </div>
+      </aside>
 
-          <aside className="resume-card" aria-label="Resume summary">
-            <img src={heroLayer} alt="" />
-            <div className="resume-card-content">
-              <span className="card-label">Expected graduation</span>
-              <strong>April 2029</strong>
-              <span className="card-label">Core direction</span>
-              <strong>Full-stack development and automation</strong>
+      <section className="home-feature-card feature-work">
+        <p className="home-kicker">Photo Archive</p>
+        <h2>Moments from my past</h2>
+        <p>
+          A small visual collection of places, people, school life, travel, and
+          everyday scenes that shaped my story outside the resume.
+        </p>
+        <button className="button ghost" onClick={() => onNavigate('/photos')}>
+          View photos
+        </button>
+      </section>
+
+      <section className="home-ai-card">
+        <p className="home-kicker">Ask Eason AI</p>
+        <h2>Portfolio assistant</h2>
+        <div className="chat-window">
+          {chatMessages.map((message, index) => (
+            <div className={`chat-bubble ${message.role}`} key={`${message.role}-${index}`}>
+              {message.content}
             </div>
-          </aside>
-        </div>
-
-        <div className="highlight-row">
-          {highlights.map((item) => (
-            <p key={item}>{item}</p>
           ))}
+          {isSending && <div className="chat-bubble assistant">Thinking...</div>}
         </div>
-      </header>
+        {chatError && <p className="chat-error">{chatError}</p>}
+        <form className="chat-input" onSubmit={sendChatMessage}>
+          <input
+            aria-label="Ask Eason AI"
+            onChange={(event) => setChatInput(event.target.value)}
+            placeholder="Ask something about Eason..."
+            value={chatInput}
+          />
+          <button disabled={isSending || !chatInput.trim()} type="submit">
+            Send
+          </button>
+        </form>
+      </section>
 
-      <Section marker="01" title="Education">
-        <div className="education-grid">
-          <article className="panel education-panel">
-            <div>
-              <h3>University of Waterloo</h3>
-              <p>Bachelor of Mathematics</p>
-              <p className="muted">
-                Core courses: Calculus, Linear Algebra, Algebra, Designing
-                Functional Programs
-              </p>
-            </div>
-            <span>Expected Apr 2029</span>
-          </article>
+      <div className="home-mini-grid">
+        <section className="home-mini-card location-card">
+          <iframe
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=250%20Phillip%20St%2C%20Waterloo%2C%20ON&output=embed"
+            title="Google Map showing 250 Phillip St, Waterloo"
+          ></iframe>
+          <p className="home-kicker">Current Base</p>
+          <h2>Location</h2>
+          <p>250 Phillip St, Waterloo, ON</p>
+          <a className="button ghost" href="https://maps.google.com/?q=250%20Phillip%20St%2C%20Waterloo%2C%20ON" target="_blank" rel="noreferrer">
+            Open Map
+          </a>
+        </section>
 
-          <article className="panel awards-panel">
-            <h3>Awards</h3>
-            <ul>
-              {awards.map((award) => (
-                <li key={award}>{award}</li>
-              ))}
-            </ul>
-          </article>
-        </div>
-      </Section>
-
-      <Section marker="02" title="Skills">
-        <div className="skills-grid">
-          {skills.map(([group, items]) => (
-            <article className="panel skill-panel" key={group}>
-              <h3>{group}</h3>
-              <div>
-                {items.map((item) => (
-                  <span key={item}>{item}</span>
-                ))}
-              </div>
-            </article>
-          ))}
-        </div>
-      </Section>
-    </>
+        <section className="home-mini-card education-card-home">
+          <p className="home-kicker">Current Study</p>
+          <h2>Education</h2>
+          <p>University of Waterloo - Bachelor of Mathematics</p>
+          <a className="button ghost" href="https://uwaterloo.ca/math/" target="_blank" rel="noreferrer">
+            Waterloo Math
+          </a>
+        </section>
+      </div>
+    </div>
   )
 }
 
@@ -319,6 +547,59 @@ function ExperiencePage() {
         intro="Internship work across full-stack internal systems, automation, data processing, and technical content."
       />
       <section className="section">
+        <div className="section-title">
+          <span>Education</span>
+          <h2>Educational Background</h2>
+        </div>
+        <article className="panel resume-education-card">
+          <div>
+            <h3>University of Waterloo</h3>
+            <p>Bachelor of Mathematics</p>
+            <p className="muted">
+              Current academic term: 2B. Relevant coursework includes Calculus,
+              Linear Algebra, Algebra, and Designing Functional Programs.
+            </p>
+          </div>
+          <div className="resume-education-meta">
+            <strong>Expected Apr 2029</strong>
+            <span>Waterloo, ON</span>
+          </div>
+        </article>
+
+        <div className="section-title resume-skills-heading">
+          <span>Skills</span>
+          <h2>Technical Toolkit</h2>
+        </div>
+        <div className="resume-skills-grid">
+          {resumeSkills.map((skillGroup) => (
+            <article className="panel resume-skill-card" key={skillGroup.group}>
+              <h3>{skillGroup.group}</h3>
+              <p>{skillGroup.items.join(', ')}</p>
+              <div className="skill-marquee" aria-label={`${skillGroup.group} skills`}>
+                <div className="skill-marquee-track">
+                  {[
+                    ...skillGroup.items,
+                    ...skillGroup.items,
+                    ...skillGroup.items,
+                    ...skillGroup.items,
+                  ].map((skill, index) => (
+                    <SkillBadge key={`${skill}-${index}`} skill={skill} />
+                  ))}
+                </div>
+              </div>
+              <div className="skill-static-list">
+                {skillGroup.items.map((skill) => (
+                  <SkillBadge key={skill} skill={skill} />
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="section-title resume-experience-heading">
+          <span>Work</span>
+          <h2>Experience</h2>
+        </div>
         <div className="experience-list">
           {experience.map((item) => (
             <article className="experience-item" key={item.role}>
@@ -368,6 +649,13 @@ function ProjectsPage() {
               </div>
               <p className="tools">Tools: {project.tools}</p>
               <p>{project.text}</p>
+              {project.url && (
+                <p className="project-link">
+                  <a href={project.url} rel="noreferrer" target="_blank">
+                    {project.url}
+                  </a>
+                </p>
+              )}
             </article>
           ))}
         </div>
@@ -376,15 +664,168 @@ function ProjectsPage() {
   )
 }
 
-function ActivitiesPage() {
+function PhotosPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Beyond coursework"
-        title="Activities"
-        intro="Teaching, clubs, workshops, and technical demonstrations that connect STEM learning with hands-on communication."
+        eyebrow="Photo Archive"
+        title="Moments from my past"
+        intro="A visual archive from public/my photos: school life, travel, daily scenes, and memories outside the resume."
       />
       <section className="section">
+        <div className="photo-grid">
+          {photoPaths.map((photoPath, index) => (
+            <figure className="photo-tile" key={photoPath}>
+              <img alt={`Eason Hua photo archive ${index + 1}`} loading="lazy" src={photoPath} />
+            </figure>
+          ))}
+        </div>
+      </section>
+    </>
+  )
+}
+
+function ActivitiesPage() {
+  const [activePianoVideo, setActivePianoVideo] = useState(0)
+  const currentPianoVideo = pianoVideos[activePianoVideo]
+  const previousPianoVideo =
+    pianoVideos[activePianoVideo === 0 ? pianoVideos.length - 1 : activePianoVideo - 1]
+  const nextPianoVideo =
+    pianoVideos[activePianoVideo === pianoVideos.length - 1 ? 0 : activePianoVideo + 1]
+
+  const showPreviousPianoVideo = () => {
+    setActivePianoVideo((currentIndex) =>
+      currentIndex === 0 ? pianoVideos.length - 1 : currentIndex - 1,
+    )
+  }
+
+  const showNextPianoVideo = () => {
+    setActivePianoVideo((currentIndex) =>
+      currentIndex === pianoVideos.length - 1 ? 0 : currentIndex + 1,
+    )
+  }
+
+  return (
+    <>
+      <PageHeader
+        eyebrow="About"
+        title="About Eason"
+        intro="A Waterloo mathematics student building practical full-stack systems, automation workflows, and technical tools."
+      />
+      <section className="section">
+        <div className="about-layout">
+          <article className="panel about-panel">
+            <p className="about-lead">
+              I am a Bachelor of Mathematics student at the University of
+              Waterloo, currently back on campus for my 2B academic term.
+            </p>
+            <p>
+              My interests sit at the intersection of full-stack development,
+              automation, data workflows, and practical software systems that
+              make complex processes easier for people to use.
+            </p>
+            <p>
+              During my internship at Emerson Test & Measurement, formerly
+              National Instruments, I worked on full-stack and automation-focused
+              internal tools for technical and business workflows. I designed and
+              implemented an internal system for configuring NI hardware, built
+              backend logic for real-time performance computation and
+              compatibility checks, and created backend data pipelines for
+              software revenue and service analysis.
+            </p>
+            <p>
+              I also have part-time experience across product and web
+              development, including CRM workflows, project management
+              automation, React and WordPress websites, authentication,
+              questionnaire automation, email delivery, and CMS integration.
+            </p>
+            <p>
+              Outside software, I enjoy creative technical work such as 3D
+              modeling, animation, STEM visualization, and piano. I like tools
+              that make abstract ideas easier to understand and workflows that
+              help people move faster without losing clarity.
+            </p>
+          </article>
+
+          <aside className="about-facts">
+            <article className="panel fact-card">
+              <span>Current</span>
+              <strong>2B academic term at Waterloo</strong>
+            </article>
+            <article className="panel fact-card">
+              <span>Focus</span>
+              <strong>Full-stack systems and automation</strong>
+            </article>
+            <article className="panel fact-card">
+              <span>Creative</span>
+              <strong>3D animation, STEM visuals, piano</strong>
+            </article>
+          </aside>
+        </div>
+
+        <div className="section-title about-activities-title">
+          <span>Piano</span>
+          <h2>Practice Notes</h2>
+        </div>
+        <div className="piano-stage" aria-label="Piano practice video carousel">
+          <button
+            aria-label="Previous piano video"
+            className="piano-nav previous"
+            onClick={showPreviousPianoVideo}
+          >
+            Prev
+          </button>
+          <div className="piano-stack">
+            <article className="piano-card preview left" aria-hidden="true">
+              <video muted preload="metadata" src={previousPianoVideo.src}>
+                <track kind="captions" />
+              </video>
+            </article>
+            <article className="piano-card preview right" aria-hidden="true">
+              <video muted preload="metadata" src={nextPianoVideo.src}>
+                <track kind="captions" />
+              </video>
+            </article>
+            <article className="piano-card active" key={currentPianoVideo.src}>
+              <video controls preload="metadata" src={currentPianoVideo.src}>
+                <track kind="captions" />
+              </video>
+              <div className="piano-card-body">
+                <span>
+                  {activePianoVideo + 1} / {pianoVideos.length}
+                </span>
+                <h3>{currentPianoVideo.title}</h3>
+                <p>{currentPianoVideo.description}</p>
+              </div>
+            </article>
+          </div>
+          <button
+            aria-label="Next piano video"
+            className="piano-nav next"
+            onClick={showNextPianoVideo}
+          >
+            Next
+          </button>
+          <div className="piano-thumbs" aria-label="Piano video selector">
+            {pianoVideos.map((video, index) => (
+              <button
+                aria-label={`Show ${video.title}`}
+                aria-pressed={activePianoVideo === index}
+                key={video.src}
+                onClick={() => setActivePianoVideo(index)}
+              >
+                <video muted preload="metadata" src={video.src}>
+                <track kind="captions" />
+              </video>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="section-title about-activities-title">
+          <span>More</span>
+          <h2>Activities</h2>
+        </div>
         <div className="activity-grid">
           {activities.map((activity) => (
             <article className="panel activity-panel" key={activity.title}>
@@ -457,6 +898,7 @@ function App() {
       {path === '/' && <HomePage onNavigate={navigate} />}
       {path === '/experience' && <ExperiencePage />}
       {path === '/projects' && <ProjectsPage />}
+      {path === '/photos' && <PhotosPage />}
       {path === '/activities' && <ActivitiesPage />}
       {path === '/contact' && <ContactPage />}
       {!currentRoute && <NotFoundPage onNavigate={navigate} />}
