@@ -22,8 +22,8 @@ const routes = [
 ]
 
 const photoFiles = [
-  '00a861f2aa307e5c26014a210f265489.jpg',
   '08c71892eba4aba48e44d1b7bbff2658.jpg',
+  '00a861f2aa307e5c26014a210f265489.jpg',
   '100c634cdbf7de11bed031117b37e74f.jpg',
   '1115dd33d007a46d6096fd8b95f2c9db.jpg',
   '11b850ed761c3f92cb24646554bac4bc.jpg',
@@ -380,6 +380,15 @@ function HomePage({ onNavigate }) {
   ])
   const [isSending, setIsSending] = useState(false)
   const [chatError, setChatError] = useState('')
+  const [featuredPhotoIndex, setFeaturedPhotoIndex] = useState(0)
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setFeaturedPhotoIndex((currentIndex) => (currentIndex + 1) % photoPaths.length)
+    }, 3200)
+
+    return () => window.clearInterval(timer)
+  }, [])
 
   const sendChatMessage = async (event) => {
     event.preventDefault()
@@ -484,6 +493,11 @@ function HomePage({ onNavigate }) {
       </aside>
 
       <section className="home-feature-card feature-work">
+        <div
+          aria-hidden="true"
+          className="home-feature-card-media"
+          style={{ backgroundImage: `url("${photoPaths[featuredPhotoIndex]}")` }}
+        ></div>
         <p className="home-kicker">Photo Archive</p>
         <h2>Moments from my past</h2>
         <p>

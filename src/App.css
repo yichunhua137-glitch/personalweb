@@ -292,17 +292,36 @@ a {
 }
 
 .home-feature-card {
+  display: grid;
+  grid-column: 1;
   align-content: start;
+  min-height: 460px;
+  padding: 34px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   background:
     linear-gradient(90deg, rgba(8, 10, 13, 0.66), rgba(8, 10, 13, 0.22) 42%, rgba(8, 10, 13, 0.86)),
     linear-gradient(180deg, rgba(8, 10, 13, 0.08), rgba(8, 10, 13, 0.82)),
-    url('/my%20photos/00a861f2aa307e5c26014a210f265489.jpg') center / cover,
     linear-gradient(135deg, rgba(245, 197, 66, 0.32), rgba(30, 34, 45, 0.96)),
     repeating-linear-gradient(135deg, rgba(245, 197, 66, 0.16) 0 10px, transparent 10px 20px);
-  grid-column: 1;
-  display: grid;
-  min-height: 460px;
-  padding: 34px;
+}
+
+.home-feature-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.home-feature-card-media {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.52;
+  transform: scale(1.03);
+  transition: background-image 0.5s ease, opacity 0.5s ease, transform 6s ease;
+  z-index: 0;
 }
 
 .button.ghost {
